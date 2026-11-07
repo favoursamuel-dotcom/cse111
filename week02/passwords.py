@@ -56,6 +56,25 @@ def password_strength(password, min_length=10, strong_length=16):
     strength = 1 + complexity
 
     return strength
+# OPTIONAL FEATURE: Password improvement tips
+# This function gives users suggestions for creating
+# stronger passwords based on their password's strength.
+
+def password_tips(strength):
+    if strength == 0:
+        print("Tip: Avoid dictionary words and commonly used passwords.")
+
+    elif strength == 1:
+        print("Tip: Use at least 10 characters in your password.")
+
+    elif strength == 2 or strength == 3:
+        print("Tip: Try adding uppercase letters, numbers, and special symbols.")
+
+    elif strength == 4:
+        print("Tip: Good password! Consider making it longer.")
+
+    else:
+        print("Excellent! Your password received the highest strength score.")
 def main():
     while True:
         password = input("Enter password: ")
@@ -63,6 +82,8 @@ def main():
             strength = password_strength(password)
             print(f"You entered: {password}")
             print(f"Password strength: {strength}")
+            # OPTIONAL FEATURE: Show password improvement tips
+            password_tips(strength)
         else:
             break
 if __name__ == "__main__":
