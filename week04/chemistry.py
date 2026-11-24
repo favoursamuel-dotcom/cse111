@@ -1,3 +1,4 @@
+from formula import parse_formula
 
 def make_periodic_table():
     periodic_table_dict = {
@@ -100,8 +101,50 @@ def make_periodic_table():
 
     return periodic_table_dict
 
+def compute_molar_mass(symbol_list, periodic_table_dict):
+    total_mass = 0
+
+    SYMBOL_INDEX = 0
+    QUANTITY_INDEX = 1
+    ATOMIC_MASS_INDEX = 1
+
+    for element in symbol_list:
+        symbol = element[SYMBOL_INDEX]
+        quantity = element[QUANTITY_INDEX]
+
+        atomic_mass = periodic_table_dict[symbol][ATOMIC_MASS_INDEX]
+
+        total_mass += atomic_mass * quantity
+
+    return total_mass
+
+# EXCEEDING REQUIREMENTS:
+# I added a feature that displays the name and number
+# of atoms of each element in the molecular formula.
+
 def main():
-    print(make_periodic_table())
+    periodic_table = make_periodic_table()
+    formula = input("Enter the molecular formula: ")
+    sample_mass = float(input("Enter the mass in grams: "))
+
+    symbol_list = parse_formula(formula, periodic_table)
+
+    print("\nElements in the molecule:")
+
+    for element in symbol_list:
+        symbol = element[0]
+        quantity = element[1]
+
+        element_name = periodic_table[symbol][0]
+
+        print(f"{element_name}: {quantity} atoms")
+
+        molar_mass = compute_molar_mass(symbol_list, periodic_table)
+
+        number_of_moles = sample_mass / molar_mass
+
+        print(f"Molar mass: {molar_mass:.5f} grams/mole")
+        print(f"Number of moles: {number_of_moles:.5f} moles")
     
 
 if __name__ == "__main__":
